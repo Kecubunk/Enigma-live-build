@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e 
+
+lb config noauto \
+	--distribution bookworm \
+	--architecture amd64  \
+	--apt-recommends 'false' \
+ 	--linux-flavours 'amd64' \
+ 	--checksums 'md5' \
+ 	--archive-areas "main contrib non-free non-free-firmware" \
+ 	--debian-installer live \
+ 	--debian-installer-gui true \
+ 	--mirror-binary " http://deb.debian.org/debian/ " \
+ 	--mirror-binary-security "https://security.debian.org/debian-security" \
+ 	--mirror-bootstrap "https://deb.debian.org/debian" \
+ 	--debootstrap-options "--variant=minbase --include=apt-transport-https,ca-certificates,openssl" \
+ 	--distribution stable \
+ 	--bootappend-live "boot=live swap config username=enigma-user live-config.hostname=EnigmaOS live-config.user-default-groups=audio,cdrom,floppy,video,dip,plugdev,scanner,bluetooth,netdev,sudo" \
+ 	--debconf-frontend "noninteractive" \
+	--swap-file-size 4096 \
+	--firmware-binary true \
+	--firmware-chroot true \
+	--update 'true' \
+	--iso-application "EnigmaOS" \
+	--iso-publisher "EnigmaOS GNU/Linux" \
+	--iso-volume "EnigmaOS_Debian_Bookworm12" \
+	--iso-preparer 'Cahyo hertanto'\
+	--binary-images iso-hybrid \
+	--uefi-secure-boot auto \
+	--updates true \
+	--win32-loader true \
+	--zsync false \
+
+ "${@}"       
+        
